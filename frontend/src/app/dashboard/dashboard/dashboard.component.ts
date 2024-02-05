@@ -37,10 +37,10 @@ export class DashboardComponent implements OnInit {
 
 
     filterForm = new FormGroup({
-        title: new FormControl<string>(''),
-        description: new FormControl<string>(''),
-        priority: new FormControl<string>("",),
-        completionStatus: new FormControl<string>("",),
+        title: new FormControl<string>(""),
+        description: new FormControl<string>(""),
+        priority: new FormControl<string>(""),
+        completionStatus: new FormControl<string>(""),
         // dueDate: new FormControl<string>("",[Validators.required])
     })
 
@@ -103,6 +103,7 @@ export class DashboardComponent implements OnInit {
     }
 
     handleTaskFilter() {
+      console.log(this.filterForm.value, "filter forms=====>")
         this.appService
             .searchTask(
                 this.filterForm.controls.title.value as string,

@@ -17,7 +17,6 @@ import com.oasis.assessment.services.AppUserService;
 import com.oasis.assessment.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -131,8 +130,14 @@ public class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> searchTask(String title, String description, PriorityEnum priority, Timestamp dueDate, CompletionStatusEnum completionStatus) {
-        Specification<Task> taskSpecification = TaskSpecification.searchTask(title, description, priority, dueDate, completionStatus);
-        return taskRepository.findAll(taskSpecification);
+        return taskRepository.findAll(
+                TaskSpecification
+                        .hasTitle(title)
+                        .or(TaskSpecification.hasDescription(description))
+                        .or(priority != null ? TaskSpecification.hasPriority(priority) : null)
+                        .or(dueDate != null ? TaskSpecification.hasDueDate(dueDate.toLocalDateTime()) : null)
+                        .or(completionStatus != null?TaskSpecification.hasCompletionStatus(completionStatus):null)
+        );
     }
 
     @Override

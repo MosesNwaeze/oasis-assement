@@ -1,11 +1,13 @@
 package com.oasis.assessment.controllers;
 
 
-import com.oasis.assessment.dtos.*;
+import com.oasis.assessment.dtos.TaskCategoryRequestDto;
+import com.oasis.assessment.dtos.TaskCategoryResponseDto;
+import com.oasis.assessment.dtos.TaskRequestDto;
+import com.oasis.assessment.dtos.TaskResponseDto;
 import com.oasis.assessment.enums.CompletionStatusEnum;
 import com.oasis.assessment.enums.PriorityEnum;
 import com.oasis.assessment.errors.NotFoundException;
-import com.oasis.assessment.models.AppUser;
 import com.oasis.assessment.models.Task;
 import com.oasis.assessment.models.TaskCategory;
 import com.oasis.assessment.services.AppUserService;
@@ -14,6 +16,7 @@ import com.oasis.assessment.services.UserService;
 import com.oasis.assessment.utils.JWTUtility;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +24,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @CrossOrigin("*")
 @RestController
@@ -178,35 +183,45 @@ public class TaskController {
 
     @GetMapping("search")
     public ResponseEntity<List<TaskResponseDto>> search(
-            @RequestParam(name = "title", required = false, defaultValue = "") String title,
-            @RequestParam(name = "description", required = false, defaultValue = "") String description,
-            @RequestParam(name="priority", required = false) PriorityEnum priority,
-            @RequestParam(name = "dueDate",required = false) Timestamp dueDate,
-            @RequestParam(name = "completionStatus",required = false) CompletionStatusEnum completionStatus
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "description", required = false) String description,
+            @RequestParam(name = "priority", required = false) String priority,
+            @RequestParam(name = "dueDate", required = false) String dueDate,
+            @RequestParam(name = "completionStatus", required = false) String completionStatus
             ){
 
+        PriorityEnum formatedPriority = StringUtils.isNotBlank(priority) ? PriorityEnum.valueOf(priority) : null;
+        CompletionStatusEnum formatedCompletionStatus = StringUtils.isNotBlank(completionStatus)
+                ? CompletionStatusEnum.valueOf(completionStatus) : null;
+        Timestamp formatedDueDate = StringUtils.isNotBlank(dueDate)
+                ? Timestamp.valueOf(LocalDateTime.parse(dueDate)) : null;
+        String formattedDescription = StringUtils.isNotBlank(description)
+                ? description : null;
+        String formattedTitle = StringUtils.isNotBlank(title)
+                ? title : null;
 
         List<Task> taskList = taskService
-                .searchTask(title, description, priority, dueDate, completionStatus);
-        List<TaskResponseDto> list = taskList
-                .stream()
-                .map(task -> {
-                    TaskResponseDto taskResponseDto = TaskResponseDto
-                            .builder()
-                            .title(task.getTitle())
-                            .taskId(task.getId())
-                            .status(task.getStatus())
-                            .priority(task.getPriority())
-                            .completionStatus(task.getCompletionStatus())
-                            .dueDate(task.getDueDate().toLocalDateTime())
-                            .description(task.getDescription())
-                            .completionStatus(task.getCompletionStatus())
-                            .build();
-                    return taskResponseDto;
-                })
-                .toList();
+                .searchTask(
+                        formattedTitle,
+                        formattedDescription,
+                        formatedPriority,
+                        formatedDueDate,
+                        formatedCompletionStatus
+                );
 
-        return ResponseEntity.ok().body(list);
+        logger.info("Filtered task list ===> {}", taskList);
+
+        if (Objects.nonNull(taskList)) {
+            List<TaskResponseDto> list = taskList.stream().map(task -> {
+                        return TaskResponseDto.builder().taskId(task.getId()).status(task.getStatus()).dueDate(task.getDueDate().toLocalDateTime()).priority(task.getPriority()).description(task.getDescription()).appUser(task.getAppUserModel()).completionStatus(task.getCompletionStatus()).title(task.getTitle()).taskCategory(task.getTaskCategory()).build();
+                    }
+
+            ).toList();
+
+            return ResponseEntity.ok().body(list);
+        }
+
+        throw new NotFoundException("Resource cannot be found");
 
     }
 

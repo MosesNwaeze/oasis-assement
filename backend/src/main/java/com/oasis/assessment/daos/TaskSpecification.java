@@ -8,42 +8,29 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 import jakarta.persistence.criteria.Predicate;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class TaskSpecification {
 
-    public static Specification<Task> searchTask(
-            String title,
-            String description,
-            PriorityEnum priority,
-            Timestamp dueDate,
-            CompletionStatusEnum completionStatus
-    ){
+      public static Specification<Task> hasTitle(String title){
+          return (root,query,builder) -> builder.like(root.get("title"), "%" + title + "%");
+      }
 
-        return (root,query,criteriaBuilder) ->{
+      public static Specification<Task> hasDescription(String description){
+          return (root,query,builder) -> builder.like(root.get("description"), "%" + description + "%");
+      }
 
-            Predicate titlePredicate =  criteriaBuilder.like(root.get("title"), StringUtils.isBlank(title)
-                    ? likePattern()    : title
-            );
+      public static Specification<Task> hasPriority(PriorityEnum priority){
+          return (root,query,builder) -> builder.equal(root.get("priority"), priority.name());
+      }
 
-            Predicate descriptionPredicate = criteriaBuilder.like(root.get("description"), StringUtils.isBlank(description)
-                    ? likePattern()    : description
-            );
+      public static Specification<Task> hasCompletionStatus(CompletionStatusEnum completionStatus){
+          return (root,query,builder) -> builder.equal(root.get("completionStatus"), completionStatus.name());
+      }
 
-            Predicate priorityPredicate = criteriaBuilder.equal(root.get("priority"),priority);
+      public static Specification<Task> hasDueDate(LocalDateTime dueDate){
+          return (root,query,builder) -> builder.equal(root.get("dueDate"), dueDate);
+      }
 
-            Predicate dueDatePredicate = criteriaBuilder.equal(root.get("dueDate"), dueDate);
-
-            Predicate complettionStatusPredicate = criteriaBuilder.equal(root.get("completionStatus"),completionStatus);
-
-            return  criteriaBuilder.or(titlePredicate,descriptionPredicate,priorityPredicate,dueDatePredicate,complettionStatusPredicate);
-
-        };
-
-    }
-
-
-    private static String likePattern(){
-        return "%" + "" + "%";
-    }
 }
