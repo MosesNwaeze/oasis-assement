@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from "../../components/header/header.component";
 import {FooterComponent} from "../../components/footer/footer.component";
 import {ToggleSelectDirective} from "../../toggle-select.directive";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {AppServiceService} from "../../services/app-service.service";
 import {UserResponseDto} from "../../dtos/UserResponseDto";
@@ -15,17 +15,18 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular
 @Component({
     selector: 'app-dashboard',
     standalone: true,
-    imports: [
-        HeaderComponent,
-        FooterComponent,
-        ToggleSelectDirective,
-        NgIf,
-        RouterLink,
-        NgForOf,
-        ReactiveFormsModule,
-        FormsModule,
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    ToggleSelectDirective,
+    NgIf,
+    RouterLink,
+    NgForOf,
+    ReactiveFormsModule,
+    FormsModule,
+    DatePipe,
 
-    ],
+  ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
     providers: []

@@ -71,6 +71,9 @@ public class AppUserServiceImp implements AppUserService {
         if (Objects.nonNull(userRequestDto.getRoles())) {
             appUser.setRoles(userRequestDto.getRoles());
         }
+        if (Objects.nonNull(userRequestDto.getPassword())) {
+            appUser.setPassword(userRequestDto.getPassword());
+        }
         return this.userRepository.save(appUser);
     }
 

@@ -38,7 +38,7 @@ export class UpdateUserComponent implements OnInit {
         firstName: new FormControl<string>("", [Validators.required]),
         lastName: new FormControl<string>("", [Validators.required]),
         email: new FormControl<string>("", [Validators.required]),
-        // password: new FormControl<string>("", [Validators.required]),
+        password: new FormControl<string>("", ),
         roles: new FormControl<string>("", [Validators.required])
     })
 
@@ -72,7 +72,8 @@ export class UpdateUserComponent implements OnInit {
                             email: value.email,
                             firstName: value.firstName,
                             lastName: value.lastName,
-                            roles: value.roles
+                            roles: value.roles,
+                            password: ''
                         })
 
                 },

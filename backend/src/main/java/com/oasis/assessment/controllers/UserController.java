@@ -155,8 +155,20 @@ public class UserController {
     @PutMapping("update/user/{userId}")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long userId,@RequestBody UserRequestDto userRequestDto){
 
+        String updatedPassword = this.passwordEncoder.encode(userRequestDto.getPassword());
+        UserRequestDto dto = UserRequestDto
+                .builder()
+                .roles(userRequestDto.getRoles())
+                .password(updatedPassword)
+                .email(userRequestDto.getEmail())
+                .firstName(userRequestDto.getFirstName())
+                .lastName(userRequestDto.getLastName())
+                .username(userRequestDto.getUsername())
+                .build();
+
+
         AppUser user = appUserService
-                .updateUser(userId,userRequestDto);
+                .updateUser(userId,dto);
 
         UserResponseDto userResponseDto = UserResponseDto
                 .builder()

@@ -21,6 +21,12 @@
             <small class="text-danger fs-6 mt-2" *ngIf="updateForm.invalid && updateForm.controls.email.dirty && updateForm.controls.email.errors?.['required']">Email is required</small>
         </div>
 
+      <div class="mb-5">
+        <label class="form-label  fw-bolder">Password</label>
+        <input type="password" placeholder="Enter new password" name="password" class="form-control" [formControl]="updateForm.controls.password"/>
+<!--        <small class="text-danger fs-6 mt-2" *ngIf="updateForm.invalid && updateForm.controls.email.dirty && updateForm.controls.email.errors?.['required']">Email is required</small>-->
+      </div>
+
         <div class="mb-5">
             <label class="form-label  fw-bolder">Role</label>
             <select
@@ -28,9 +34,9 @@
                     aria-label="select task priority"
                     [formControl]="updateForm.controls.roles"
             >
-                <option>DEFAULT VALUE</option>
-                <option value="role_admin">ADMIN</option>
-                <option value="role_user">USER</option>
+                <option ngValue="">DEFAULT VALUE</option>
+                <option ngValue="role_admin">ADMIN</option>
+                <option ngValue="role_user">USER</option>
             </select>
             <span class="d-block text-danger fs-6 mt-1" *ngIf="updateForm.invalid && updateForm.controls.roles.dirty && updateForm.controls.roles.errors?.['required']">Role field is required</span>
         </div>
