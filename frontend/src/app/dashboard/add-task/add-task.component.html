@@ -1,0 +1,83 @@
+<app-header/>
+
+<div class="container text-center mt-4" style="position: sticky; top: 0">
+  <h1>Task creation view</h1>
+
+  <form class="py-4 text-start w-50 mb-4" style="margin: auto" ngForm="taskForm" (ngSubmit)="handleFormSubmit()">
+    <div class="mb-3">
+      <label class="form-label  fw-bolder">Title</label>
+      <textarea
+        class="form-control"
+        name="title"
+        placeholder="Enter task title"
+        rows="5"
+        [formControl]="taskForm.controls.title"
+      ></textarea>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.title.errors?.['required']">Title is required</span>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.title.errors?.['minLength']">Title should be less than 5 characters</span>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.title.errors?.['maxLength']">Title should be greater than 200 characters</span>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.title.errors?.['pattern']">Title field has wrong input format</span>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label  fw-bolder">Description</label>
+      <textarea
+        class="form-control"
+        name="description"
+        placeholder="Enter task description"
+        rows="5"
+        [formControl]="taskForm.controls.description"
+      ></textarea>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.description.errors?.['required']">Description is required</span>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.description.errors?.['minLength']">Description should be less than 5 characters</span>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.description.errors?.['maxLength']">Description should be greater than 200 characters</span>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label  fw-bolder">Priority</label>
+      <select
+        class="form-select"
+        aria-label="select task priority"
+        [formControl]="taskForm.controls.priority"
+      >
+        <option>DEFAULT VALUE</option>
+        <option value="HIGH">HIGH</option>
+        <option value="MEDIUM">MEDIUM</option>
+        <option value="LOW">LOW</option>
+      </select>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.priority.errors?.['required']">Priority is required</span>
+    </div>
+
+
+    <div class="mb-3">
+      <label class="form-label  fw-bolder">Completion status</label>
+      <select
+        class="form-select"
+        aria-label="select task priority"
+        [formControl]="taskForm.controls.completionStatus"
+      >
+        <option>DEFAULT VALUE</option>
+        <option value="DONE">DONE</option>
+        <option value="IN_PROGRESS">IN_PROGRESS</option>
+        <option value="NOT_STARTED">NOT_STARTED</option>
+      </select>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.completionStatus.errors?.['required']">Completion status is required</span>
+    </div>
+
+
+    <div class="mb-3">
+      <label class="form-label fw-bolder d-block">Due Date</label>
+
+      <ngb-datepicker  #dp [(ngModel)]="model" (navigate)="date = $event.next" name="dueDate"
+                        (click)="captureDate()"/>
+      <span class="d-block text-danger fs-6 mt-1" *ngIf="taskForm.controls.dueDate.errors?.['required']">Due-date is required</span>
+    </div>
+
+    <div class="mb-5">
+      <button type="submit" class="btn btn-success text-dark w-100">Create Task</button>
+    </div>
+  </form>
+
+</div>
+
+<app-footer/>

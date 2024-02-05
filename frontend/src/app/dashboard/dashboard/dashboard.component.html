@@ -1,0 +1,139 @@
+<app-header/>
+
+<div class="container">
+  <div class="row row-cols-2">
+    <div class="mt-5">
+      <div class="mb-3">
+        <h5 class="fw-bold">Categorised your task</h5>
+      </div>
+
+      <div>
+       <button >Click to create category</button>
+      </div>
+
+    </div>
+
+    <div class="text-start mt-5">
+      <div class="mb-3">
+        <h5 class="fw-bold">Filter Task:</h5>
+      </div>
+      <div>
+        <form class="row row-cols-2" ngForm="filterForm" (ngSubmit)="handleTaskFilter()">
+          <div>
+            <div class="mb-3">
+              <label class="form-label  fw-bolder">Title</label>
+              <input
+                      type="text"
+                      [formControl]="filterForm.controls.title"
+                      placeholder="Enter title"
+                      name="title"
+                      class="form-control"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label  fw-bolder">Description</label>
+              <input
+                      type="text"
+                      [formControl]="filterForm.controls.description"
+                      placeholder="Enter Description"
+                      name="description"
+                      class="form-control"
+              />
+            </div>
+          </div>
+          <div>
+
+            <div class="mb-3">
+              <label class="form-label  fw-bolder">Priority</label>
+              <select
+                      class="form-select"
+                      aria-label="select task priority"
+                      [formControl]="filterForm.controls.priority"
+              >
+                <option>DEFAULT VALUE</option>
+                <option value="HIGH">HIGH</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="LOW">LOW</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label  fw-bolder">Completion status</label>
+              <select
+                      class="form-select"
+                      aria-label="select task priority"
+                      [formControl]="filterForm.controls.completionStatus"
+              >
+                <option>DEFAULT VALUE</option>
+                <option value="DONE">DONE</option>
+                <option value="IN_PROGRESS">IN_PROGRESS</option>
+                <option value="NOT_STARTED">NOT_STARTED</option>
+              </select>
+
+            </div>
+
+          </div>
+          <div class="mb-5">
+            <button type="submit" class="btn btn-primary text-dark w-100 fw-bold">Filter Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="d-flex justify-content-between align-items-center pt-3">
+    <h1>Task management</h1>
+    <a class="btn btn-link text-decoration-none" [routerLink]="['/task-management/add-task',userId]">Add Task</a>
+
+  </div>
+
+  <div class="table-responsive mt-3">
+    <table class="table">
+
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Completion Status</th>
+        <th>Due Date</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      <tr *ngFor="let task of tasks;let i = index">
+
+        <td>
+          {{i + 1}}
+        </td>
+        <td>
+          {{task.title}}
+        </td>
+        <td>
+          {{task.description}}
+        </td>
+        <td>
+          {{task.priority}}
+        </td>
+        <td>
+          {{task.completionStatus}}
+        </td>
+        <td>
+          {{task.dueDate}}
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm" (click)="update(task.taskId)">Update</button>
+          |
+          <button type="button" class="btn btn-danger btn-sm" (click)="delete(task.taskId)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<app-footer/>

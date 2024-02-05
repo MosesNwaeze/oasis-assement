@@ -1,0 +1,35 @@
+<div class="container text-center mt-4">
+  <h1>Login page</h1>
+
+  <form class="py-4 text-start w-50 " style="margin: auto" (ngSubmit)="handleLogin()" ngForm="loginForm">
+    <div class="mb-5">
+      <label class="form-label  fw-bolder">Username</label>
+      <input
+              type="text"
+              placeholder="Please enter your unique username"
+              name="username"
+              class="form-control"
+              [formControl]="loginForm.controls.username"
+      />
+    </div>
+
+    <div class="mb-5">
+      <label class="form-label  fw-bolder">Password</label>
+      <input
+              type="password"
+              placeholder="Please enter your password"
+              name="password"
+              class="form-control"
+              [formControl]="loginForm.controls.password"
+      />
+    </div>
+
+    <div>
+      <button class="btn btn-primary text-dark w-100">Login</button>
+    </div>
+  </form>
+
+  <div>
+    <small class="fw-semibold"><span class="me-2">Don't have an account?</span> <a routerLink="/auth/register" class="btn-link">Sign up</a></small>
+  </div>
+</div>

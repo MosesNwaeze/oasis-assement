@@ -1,0 +1,24 @@
+<div class="container-fluid  position-sticky top-0 end-0 bg-white w-100 bg-opacity-50" *ngIf="show">
+
+  <div class="d-flex justify-content-between mt-1 px-2 py-3 align-items-center">
+
+    <div class="d-flex justify-content-between">
+      <a class=" me-2" [routerLink]="['/task-management/update-info',userData.userId]">
+        <img src="https://placehold.co/35x35" alt="avater" class="rounded-circle"/>
+      </a>
+
+      <div class="text-dark mt-1">
+        <h5>{{userData?.lastName ? ( userData?.lastName | titlecase) : 'John' }} {{userData?.firstName ? (userData?.firstName| titlecase) :'Doe'}}</h5>
+      </div>
+
+    </div>
+
+    <div class="">
+      <button  type="button" class="btn btn-dark rounded-pill" (click)="auth()">{{label}}</button>
+
+    </div>
+
+
+  </div>
+
+</div>
