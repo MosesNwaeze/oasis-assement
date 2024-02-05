@@ -34,16 +34,16 @@ export class UpdateTaskComponent {
     taskUpdateForm = new FormGroup({
         title: new FormControl<string>('', [
             Validators.required,
-            Validators.maxLength(300),
-            Validators.minLength(5),
-            Validators.pattern(/^[A-Za-z]+(?: [A-Za-z]+)?$/)
+            // Validators.maxLength(300),
+            // Validators.minLength(5),
+            // Validators.pattern(/^[A-Za-z]+(?: [A-Za-z]+)?$/)
         ]),
         description: new FormControl<string>('',
             [
                 Validators.required,
-                Validators.maxLength(400),
-                Validators.minLength(5),
-                Validators.pattern(/^[A-Za-z]+(?: [A-Za-z]+)?$/)
+                // Validators.maxLength(400),
+                // Validators.minLength(5),
+                // Validators.pattern(/^[A-Za-z]+(?: [A-Za-z]+)?$/)
             ]),
         priority: new FormControl<PriorityEnum>({} as PriorityEnum, [Validators.required]),
         completionStatus: new FormControl<CompletionStatusEnum>({} as CompletionStatusEnum, [Validators.required]),

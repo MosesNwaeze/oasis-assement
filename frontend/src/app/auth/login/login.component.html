@@ -11,6 +11,7 @@
               class="form-control"
               [formControl]="loginForm.controls.username"
       />
+      <small class="text-danger fs-6 mt-2" *ngIf="loginForm.invalid && loginForm.controls.username.dirty && loginForm.controls.username.errors?.['required']">Username is required</small>
     </div>
 
     <div class="mb-5">
@@ -22,10 +23,11 @@
               class="form-control"
               [formControl]="loginForm.controls.password"
       />
+      <small class="text-danger fs-6 mt-2" *ngIf="loginForm.invalid && loginForm.controls.password.dirty && loginForm.controls.password.errors?.['required']">Password is required</small>
     </div>
 
     <div>
-      <button class="btn btn-primary text-dark w-100">Login</button>
+      <button class="btn btn-primary  w-100">Login</button>
     </div>
   </form>
 

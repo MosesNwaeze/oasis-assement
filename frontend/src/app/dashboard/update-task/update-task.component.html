@@ -14,10 +14,7 @@
                     [value]="task.title"
                     [formControl]="taskUpdateForm.controls.title"
             ></textarea>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.title.errors?.['required']">Title is required</span>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.title.errors?.['minLength']">Title should be less than 5 characters</span>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.title.errors?.['maxLength']">Title should be greater than 200 characters</span>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.title.errors?.['pattern']">Title field has wrong input format</span>
+            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.invalid && taskUpdateForm.controls.title.dirty && taskUpdateForm.controls.title.errors?.['required']">Title is required</span>
         </div>
 
         <div class="mb-3">
@@ -30,9 +27,7 @@
                     rows="5"
                     [formControl]="taskUpdateForm.controls.description"
             ></textarea>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.description.errors?.['required']">Description is required</span>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.description.errors?.['minLength']">Description should be less than 5 characters</span>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.description.errors?.['maxLength']">Description should be greater than 200 characters</span>
+            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.invalid && taskUpdateForm.controls.description.dirty && taskUpdateForm.controls.description.errors?.['required']">Description is required</span>
         </div>
 
         <div class="mb-3">
@@ -48,7 +43,7 @@
                 <option ngValue="MEDIUM">MEDIUM</option>
                 <option ngValue="LOW">LOW</option>
             </select>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.priority.errors?.['required']">Priority is required</span>
+            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.invalid && taskUpdateForm.controls.priority.dirty && taskUpdateForm.controls.priority.errors?.['required']">Priority is required</span>
         </div>
 
 
@@ -65,7 +60,7 @@
                 <option ngValue="IN_PROGRESS">IN_PROGRESS</option>
                 <option ngValue="NOT_STARTED">NOT_STARTED</option>
             </select>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.completionStatus.errors?.['required']">Completion status is required</span>
+            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.invalid && taskUpdateForm.controls.completionStatus.dirty && taskUpdateForm.controls.completionStatus.errors?.['required']">Completion status is required</span>
         </div>
 
 
@@ -74,11 +69,11 @@
 
             <ngb-datepicker  #dp [(ngModel)]="model" (navigate)="date = $event.next" name="dueDate"
                            (click)="captureDate()"/>
-            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.controls.dueDate.errors?.['required']">Due-date is required</span>
+            <span class="d-block text-danger fs-6 mt-1" *ngIf="taskUpdateForm.invalid && taskUpdateForm.controls.dueDate.dirty && taskUpdateForm.controls.dueDate.errors?.['required']">Due-date is required</span>
         </div>
 
         <div class="mb-5">
-            <button type="submit" class="btn btn-success text-dark w-100">Create Task</button>
+            <button type="submit" class="btn btn-success  w-100">Create Task</button>
         </div>
     </form>
 
